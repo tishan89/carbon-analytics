@@ -139,8 +139,8 @@ public class HeartbeatSender extends TimerTask {
                 if ((System.currentTimeMillis() - getLastUpdatedTimestamp())
                         > (leader.getHeartbeatInterval() * leader.getHeartbeatMaxRetry())) {
                     LOG.warn(String.format("Couldn't connect to the leader node for %s*%s milliseconds. Hence, " +
-                                    "cleaning up deployed Siddhi apps.",
-                            leader.getHeartbeatInterval(), leader.getHeartbeatMaxRetry()));
+                                                   "cleaning up deployed Siddhi apps.",
+                                           leader.getHeartbeatInterval(), leader.getHeartbeatMaxRetry()));
                     ResourceUtils.cleanSiddhiAppsDirectory();
                     ServiceDataHolder.getCurrentNodeConfig().setState(ResourceConstants.STATE_NEW);
                 }
@@ -149,7 +149,7 @@ public class HeartbeatSender extends TimerTask {
             response = HTTPClientUtil.doPostRequest(
                     String.format(HEARTBEAT_ENDPOINT, config.getHost(), config.getPort()),
                     ServiceDataHolder.getCurrentNodeConfig()
-            );
+                                                   );
             switch (response.code()) {
                 case 200:
                     updateLastUpdatedTimestamp();

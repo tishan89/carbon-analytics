@@ -66,7 +66,7 @@ public class CoordinatorChangeListener extends MemberEventListener {
             String groupId = ServiceDataHolder.getClusterConfig().getGroupId();
             ResourcePool existingResourcePool = ServiceDataHolder.getRdbmsService().getResourcePool(groupId);
             ServiceDataHolder.setResourcePool((existingResourcePool != null) ? existingResourcePool
-                    : new ResourcePool(groupId));
+                                                      : new ResourcePool(groupId));
             ServiceDataHolder.getResourcePool().setLeaderNode(leader);
             ServiceDataHolder.getResourcePool().init();
             DeploymentConfig deploymentConfig = ServiceDataHolder.getDeploymentConfig();

@@ -34,9 +34,10 @@ public class SiddhiAppDeployer {
         Response response = null;
         try {
             response = HTTPClientUtil.doPostRequest(String.format(SERVICE_ENDPOINT,
-                    node.getHttpInterface().getHost(), node.getHttpInterface().getPort(), ""),
-                    siddhiApp
-            );
+                                                                  node.getHttpInterface().getHost(),
+                                                                  node.getHttpInterface().getPort(), ""),
+                                                    siddhiApp
+                                                   );
             return response.code() == 201;
         } catch (IOException e) {
             if (LOG.isDebugEnabled()) {
@@ -54,8 +55,10 @@ public class SiddhiAppDeployer {
         Response response = null;
         try {
             response = HTTPClientUtil.doDeleteRequest(String.format(SERVICE_ENDPOINT,
-                    node.getHttpInterface().getHost(), node.getHttpInterface().getPort(), "/" + siddhiAppName)
-            );
+                                                                    node.getHttpInterface().getHost(),
+                                                                    node.getHttpInterface().getPort(),
+                                                                    "/" + siddhiAppName)
+                                                     );
             return response.code() == 200;
         } catch (IOException e) {
             if (LOG.isDebugEnabled()) {

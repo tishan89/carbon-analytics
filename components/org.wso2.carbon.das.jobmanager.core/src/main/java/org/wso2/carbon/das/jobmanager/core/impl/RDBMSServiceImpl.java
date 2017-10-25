@@ -102,20 +102,22 @@ public class RDBMSServiceImpl {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
                 objectOutputStream.writeObject(resourcePool);
                 byte[] resourceMappingAsBytes = byteArrayOutputStream.toByteArray();
-                preparedStatement = connection.prepareStatement(ResourceManagerConstants.PS_REPLACE_RESOURCE_MAPPING_ROW);
+                preparedStatement =
+                        connection.prepareStatement(ResourceManagerConstants.PS_REPLACE_RESOURCE_MAPPING_ROW);
                 preparedStatement.setString(1, resourcePool.getGroupId());
                 preparedStatement.setBinaryStream(2, new ByteArrayInputStream(resourceMappingAsBytes));
                 preparedStatement.executeUpdate();
                 connection.commit();
                 if (log.isDebugEnabled()) {
                     log.debug(ResourceManagerConstants.TASK_UPSERT_RESOURCE_MAPPING + " " +
-                            resourcePool.getGroupId() + " executed successfully");
+                                      resourcePool.getGroupId() + " executed successfully");
                 }
             } catch (SQLException e) {
                 rollback(connection, ResourceManagerConstants.TASK_UPSERT_RESOURCE_MAPPING);
                 throw new ResourceManagerException("Error occurred while " +
-                        ResourceManagerConstants.TASK_UPSERT_RESOURCE_MAPPING + ". Group ID" +
-                        resourcePool.getGroupId(), e);
+                                                           ResourceManagerConstants.TASK_UPSERT_RESOURCE_MAPPING
+                                                           + ". Group ID" +
+                                                           resourcePool.getGroupId(), e);
             } catch (IOException e) {
                 throw new ResourceManagerException(e);
             } finally {
@@ -151,7 +153,7 @@ public class RDBMSServiceImpl {
             connection.commit();
         } catch (SQLException | ClassNotFoundException | IOException e) {
             throw new ResourceManagerException("Error occurred while " +
-                    ResourceManagerConstants.TASK_GET_RESOURCE_MAPPING, e);
+                                                       ResourceManagerConstants.TASK_GET_RESOURCE_MAPPING, e);
         } finally {
             close(resultSet, ResourceManagerConstants.TASK_GET_RESOURCE_MAPPING);
             close(preparedStatement, ResourceManagerConstants.TASK_GET_RESOURCE_MAPPING);

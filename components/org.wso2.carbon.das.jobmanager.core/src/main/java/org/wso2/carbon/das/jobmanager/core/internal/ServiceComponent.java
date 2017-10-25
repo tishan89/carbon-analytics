@@ -76,7 +76,7 @@ public class ServiceComponent {
             log.info("Starting Manager node in distributed mode.");
             ServiceDataHolder.setRdbmsService(new RDBMSServiceImpl());
             resourceManagerAPIServiceRegistration = bundleContext.registerService(Microservice.class.getName(),
-                    new ResourceManagerApi(), null);
+                                                                                  new ResourceManagerApi(), null);
             distributionServiceRegistration = bundleContext.registerService(
                     DistributionService.class.getName(),
                     new DistributionManagerServiceImpl(new SPSiddhiAppCreator(), new DeploymentManagerImpl()),
@@ -124,15 +124,15 @@ public class ServiceComponent {
                     ServiceDataHolder.setClusterConfig(clusterConfig);
                 } else {
                     throw new ResourceManagerException("Couldn't read " + ResourceManagerConstants.CLUSTER_CONFIG_NS +
-                            " from deployment.yaml");
+                                                               " from deployment.yaml");
                 }
             } else {
                 throw new ResourceManagerException(ResourceManagerConstants.CLUSTER_CONFIG_NS + " is not specified " +
-                        "in deployment.yaml");
+                                                           "in deployment.yaml");
             }
         } catch (ConfigurationException e) {
             throw new ResourceManagerException("Error while reading " + ResourceManagerConstants.CLUSTER_CONFIG_NS +
-                    " from deployment.yaml", e);
+                                                       " from deployment.yaml", e);
         }
         try {
             if (configProvider.getConfigurationObject(ResourceManagerConstants.DEPLOYMENT_CONFIG_NS) != null) {
@@ -156,16 +156,18 @@ public class ServiceComponent {
                         }
                     } else {
                         throw new ResourceManagerException("Couldn't read " +
-                                ResourceManagerConstants.DEPLOYMENT_CONFIG_NS + " from deployment.yaml");
+                                                                   ResourceManagerConstants.DEPLOYMENT_CONFIG_NS
+                                                                   + " from deployment.yaml");
                     }
                 }
             } else {
                 throw new ResourceManagerException(ResourceManagerConstants.DEPLOYMENT_CONFIG_NS +
-                        " is not specified in deployment.yaml");
+                                                           " is not specified in deployment.yaml");
             }
         } catch (ConfigurationException e) {
             throw new ResourceManagerException("Error while reading " +
-                    ResourceManagerConstants.DEPLOYMENT_CONFIG_NS + " from deployment.yaml", e);
+                                                       ResourceManagerConstants.DEPLOYMENT_CONFIG_NS
+                                                       + " from deployment.yaml", e);
         }
     }
 

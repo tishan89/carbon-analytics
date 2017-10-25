@@ -96,26 +96,35 @@ public class RDBMSConfig {
 
     private static void updateDeploymentYaml() {
         try (BufferedReader br = new BufferedReader(new FileReader("src" + File.separator + "test" + File.separator +
-                "resources" + File.separator + "conf" + File.separator + "db" + File.separator + "persistence"
-                + File.separator + "deployment-structure.yaml"));
-        BufferedWriter bw = new BufferedWriter(new FileWriter("src" + File.separator + "test" + File.separator +
-                "resources" + File.separator + "conf" + File.separator + "db" + File.separator + "persistence"
-                + File.separator + "deployment.yaml"))){
+                                                                           "resources" + File.separator + "conf"
+                                                                           + File.separator + "db" + File.separator
+                                                                           + "persistence"
+                                                                           + File.separator
+                                                                           + "deployment-structure.yaml"));
+             BufferedWriter bw = new BufferedWriter(new FileWriter("src" + File.separator + "test" + File.separator +
+                                                                           "resources" + File.separator + "conf"
+                                                                           + File.separator + "db" + File.separator
+                                                                           + "persistence"
+                                                                           + File.separator + "deployment.yaml"))) {
 
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.contains(YAML_DATASOURCE_CONFIG_JDBC_URL))
+                if (line.contains(YAML_DATASOURCE_CONFIG_JDBC_URL)) {
                     line = line.replace(YAML_DATASOURCE_CONFIG_JDBC_URL, YAML_DATASOURCE_CONFIG_JDBC_URL +
                             " " + url);
-                if (line.contains(YAML_DATASOURCE_CONFIG_USERNAME))
+                }
+                if (line.contains(YAML_DATASOURCE_CONFIG_USERNAME)) {
                     line = line.replace(YAML_DATASOURCE_CONFIG_USERNAME, YAML_DATASOURCE_CONFIG_USERNAME +
-                            " " +  username);
-                if (line.contains(YAML_DATASOURCE_CONFIG_PASSWORD))
+                            " " + username);
+                }
+                if (line.contains(YAML_DATASOURCE_CONFIG_PASSWORD)) {
                     line = line.replace(YAML_DATASOURCE_CONFIG_PASSWORD, YAML_DATASOURCE_CONFIG_PASSWORD +
-                            " " +  password);
-                if (line.contains(YAML_DATASOURCE_CONFIG_JDBC_DRIVER))
+                            " " + password);
+                }
+                if (line.contains(YAML_DATASOURCE_CONFIG_JDBC_DRIVER)) {
                     line = line.replace(YAML_DATASOURCE_CONFIG_JDBC_DRIVER, YAML_DATASOURCE_CONFIG_JDBC_DRIVER +
                             " " + driverClassName);
+                }
                 bw.write(line + "\n");
             }
         } catch (IOException e) {

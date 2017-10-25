@@ -66,6 +66,6 @@ public class Heartbeat {
     @Override
     public String toString() {
         return String.format("HeartBeat{ nodeId: %s, lastUpdatedTimestamp: %s, failedAttempts: %s, isExpired: %s}",
-                nodeId, lastUpdatedTimestamp, failedAttempts, expired);
+                             nodeId, lastUpdatedTimestamp, failedAttempts, expired);
     }
 }

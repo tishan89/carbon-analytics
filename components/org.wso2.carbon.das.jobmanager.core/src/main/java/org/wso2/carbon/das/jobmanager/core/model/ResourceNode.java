@@ -58,6 +58,6 @@ public class ResourceNode implements Serializable {
     @Override
     public String toString() {
         return String.format("ResourceNode { id: %s, host: %s, port: %s }",
-                getId(), getHttpInterface().getHost(), getHttpInterface().getPort());
+                             getId(), getHttpInterface().getHost(), getHttpInterface().getPort());
     }
 }

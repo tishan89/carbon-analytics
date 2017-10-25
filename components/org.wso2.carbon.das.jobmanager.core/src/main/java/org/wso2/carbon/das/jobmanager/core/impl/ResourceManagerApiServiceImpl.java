@@ -74,7 +74,8 @@ public class ResourceManagerApiServiceImpl extends ResourceManagerApiService {
                 ResourceNode existingNode = resourcePool.getResourceNodeMap().get(node.getId());
                 if (existingNode != null) {
                     InterfaceConfig existingIFace = TypeConverter.convert(resourcePool.getResourceNodeMap()
-                            .get(node.getId()).getHttpInterface());
+                                                                                  .get(node.getId())
+                                                                                  .getHttpInterface());
                     InterfaceConfig currentIFace = node.getHttpInterface();
                     if (!currentIFace.equals(existingIFace)) {
                         // If existing node and the current node have the same nodeId, but different interfaces,
@@ -91,17 +92,17 @@ public class ResourceManagerApiServiceImpl extends ResourceManagerApiService {
             return Response
                     .ok()
                     .entity(new HeartbeatResponse()
-                            .connectedManagers(connectedManagers)
-                            .joinedState(joinedState)
-                            .leader(leader))
+                                    .connectedManagers(connectedManagers)
+                                    .joinedState(joinedState)
+                                    .leader(leader))
                     .build();
         } else {
             return Response
                     .status(Response.Status.MOVED_PERMANENTLY)
                     .entity(new HeartbeatResponse()
-                            .connectedManagers(null)
-                            .joinedState(null)
-                            .leader(TypeConverter.convert(ServiceDataHolder.getLeaderNode())))
+                                    .connectedManagers(null)
+                                    .joinedState(null)
+                                    .leader(TypeConverter.convert(ServiceDataHolder.getLeaderNode())))
                     .build();
         }
     }

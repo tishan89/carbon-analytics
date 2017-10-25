@@ -73,16 +73,16 @@ public class SiddhiAppCreatorTestCase {
         String companyTriggerInternalStream = "${companyTriggerInternalStream}\n"
                 + "Define stream companyTriggerInternalStream (symbol string)";
         SubscriptionStrategyDataHolder app1StockStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ROUND_ROBIN);
+                                                                                                        TransportStrategy.ROUND_ROBIN);
         SubscriptionStrategyDataHolder app1cmpTgrStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ROUND_ROBIN);
+                                                                                                         TransportStrategy.ROUND_ROBIN);
         InputStreamDataHolder stockStreamInput = new InputStreamDataHolder("stockStream", stockStream,
-                EventHolder.STREAM,
-                true, app1StockStreamSubscription);
+                                                                           EventHolder.STREAM,
+                                                                           true, app1StockStreamSubscription);
         InputStreamDataHolder cmpTgrStreamInput = new InputStreamDataHolder("companyTriggerStream",
-                companyTriggerStream,
-                EventHolder.STREAM,
-                true, app1cmpTgrStreamSubscription);
+                                                                            companyTriggerStream,
+                                                                            EventHolder.STREAM,
+                                                                            true, app1cmpTgrStreamSubscription);
         Map<String, InputStreamDataHolder> app1Input = new HashMap<>();
         app1Input.put("stockStream", stockStreamInput);
         app1Input.put("companyTriggerStream", cmpTgrStreamInput);
@@ -95,15 +95,15 @@ public class SiddhiAppCreatorTestCase {
                 .ROUND_ROBIN, 1);
 
         OutputStreamDataHolder filStreamOutput = new OutputStreamDataHolder("filteredStockStream", filteredStockStream,
-                EventHolder.STREAM, false);
+                                                                            EventHolder.STREAM, false);
         filStreamOutput.addPublishingStrategy(filStreamPub1);
         filStreamOutput.addPublishingStrategy(filStreamPub2);
         filStreamOutput.addPublishingStrategy(filStreamPub3);
         PublishingStrategyDataHolder cmpTgrIntStreamPub1 = new PublishingStrategyDataHolder("002", TransportStrategy
                 .ALL, 1);
         OutputStreamDataHolder cmpTgrIntStreamOutput = new OutputStreamDataHolder("companyTriggerInternalStream",
-                companyTriggerInternalStream,
-                EventHolder.STREAM, false);
+                                                                                  companyTriggerInternalStream,
+                                                                                  EventHolder.STREAM, false);
         cmpTgrIntStreamOutput.addPublishingStrategy(cmpTgrIntStreamPub1);
         Map<String, OutputStreamDataHolder> app1Output = new HashMap<>();
         app1Output.put("filteredStockStream", filStreamOutput);
@@ -128,17 +128,17 @@ public class SiddhiAppCreatorTestCase {
         String triggeredAvgStream = "${triggeredAvgStream}\n"
                 + "define stream triggeredAvgStream (symbol string, avgPrice double, quantity int)";
         SubscriptionStrategyDataHolder app2FilStreamSubscription = new SubscriptionStrategyDataHolder(2,
-                TransportStrategy.FIELD_GROUPING);
+                                                                                                      TransportStrategy.FIELD_GROUPING);
         app2FilStreamSubscription.setPartitionKey("symbol");
         SubscriptionStrategyDataHolder app2cmpTgrIntStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ALL);
+                                                                                                            TransportStrategy.ALL);
         InputStreamDataHolder filStreamInput = new InputStreamDataHolder("filteredStockStream", filteredStockStream,
-                EventHolder.STREAM, false,
-                app2FilStreamSubscription);
+                                                                         EventHolder.STREAM, false,
+                                                                         app2FilStreamSubscription);
         InputStreamDataHolder cmpTgrIntStreamInput = new InputStreamDataHolder("companyTriggerInternalStream",
-                companyTriggerInternalStream,
-                EventHolder.STREAM, false,
-                app2cmpTgrIntStreamSubscription);
+                                                                               companyTriggerInternalStream,
+                                                                               EventHolder.STREAM, false,
+                                                                               app2cmpTgrIntStreamSubscription);
         Map<String, InputStreamDataHolder> app2Input = new HashMap<>();
         app2Input.put("filteredStockStream", filStreamInput);
         app2Input.put("companyTriggerInternalStream", cmpTgrIntStreamInput);
@@ -146,8 +146,8 @@ public class SiddhiAppCreatorTestCase {
         PublishingStrategyDataHolder trgAvgStreamPub1 = new PublishingStrategyDataHolder("003", TransportStrategy
                 .ROUND_ROBIN, 1);
         OutputStreamDataHolder trgPubStreamOutput = new OutputStreamDataHolder("triggeredAvgStream", triggeredAvgStream,
-                EventHolder.STREAM,
-                false);
+                                                                               EventHolder.STREAM,
+                                                                               false);
         trgPubStreamOutput.addPublishingStrategy(trgAvgStreamPub1);
         Map<String, OutputStreamDataHolder> app2Output = new HashMap<>();
         app2Output.put("triggeredAvgStream", trgPubStreamOutput);
@@ -191,16 +191,16 @@ public class SiddhiAppCreatorTestCase {
         String companyTriggerInternalStream = "${companyTriggerInternalStream}\n"
                 + "Define stream companyTriggerInternalStream (symbol string)";
         SubscriptionStrategyDataHolder app1StockStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ROUND_ROBIN);
+                                                                                                        TransportStrategy.ROUND_ROBIN);
         SubscriptionStrategyDataHolder app1cmpTgrStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ROUND_ROBIN);
+                                                                                                         TransportStrategy.ROUND_ROBIN);
         InputStreamDataHolder stockStreamInput = new InputStreamDataHolder("stockStream", stockStream,
-                EventHolder.STREAM,
-                true, app1StockStreamSubscription);
+                                                                           EventHolder.STREAM,
+                                                                           true, app1StockStreamSubscription);
         InputStreamDataHolder cmpTgrStreamInput = new InputStreamDataHolder("companyTriggerStream",
-                companyTriggerStream,
-                EventHolder.STREAM,
-                true, app1cmpTgrStreamSubscription);
+                                                                            companyTriggerStream,
+                                                                            EventHolder.STREAM,
+                                                                            true, app1cmpTgrStreamSubscription);
         Map<String, InputStreamDataHolder> app1Input = new HashMap<>();
         app1Input.put("stockStream", stockStreamInput);
         app1Input.put("companyTriggerStream", cmpTgrStreamInput);
@@ -211,14 +211,14 @@ public class SiddhiAppCreatorTestCase {
                 .ROUND_ROBIN, 1);
 
         OutputStreamDataHolder filStreamOutput = new OutputStreamDataHolder("filteredStockStream", filteredStockStream,
-                EventHolder.STREAM, false);
+                                                                            EventHolder.STREAM, false);
         filStreamOutput.addPublishingStrategy(filStreamPub2);
         filStreamOutput.addPublishingStrategy(filStreamPub3);
         PublishingStrategyDataHolder cmpTgrIntStreamPub1 = new PublishingStrategyDataHolder("002", TransportStrategy
                 .ALL, 1);
         OutputStreamDataHolder cmpTgrIntStreamOutput = new OutputStreamDataHolder("companyTriggerInternalStream",
-                companyTriggerInternalStream,
-                EventHolder.STREAM, false);
+                                                                                  companyTriggerInternalStream,
+                                                                                  EventHolder.STREAM, false);
         cmpTgrIntStreamOutput.addPublishingStrategy(cmpTgrIntStreamPub1);
         Map<String, OutputStreamDataHolder> app1Output = new HashMap<>();
         app1Output.put("filteredStockStream", filStreamOutput);
@@ -243,17 +243,17 @@ public class SiddhiAppCreatorTestCase {
         String triggeredAvgStream = "${triggeredAvgStream}\n"
                 + "define stream triggeredAvgStream (symbol string, avgPrice double, quantity int)";
         SubscriptionStrategyDataHolder app2FilStreamSubscription = new SubscriptionStrategyDataHolder(5,
-                TransportStrategy.FIELD_GROUPING);
+                                                                                                      TransportStrategy.FIELD_GROUPING);
         app2FilStreamSubscription.setPartitionKey("symbol");
         SubscriptionStrategyDataHolder app2cmpTgrIntStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ALL);
+                                                                                                            TransportStrategy.ALL);
         InputStreamDataHolder filStreamInput = new InputStreamDataHolder("filteredStockStream", filteredStockStream,
-                EventHolder.STREAM, false,
-                app2FilStreamSubscription);
+                                                                         EventHolder.STREAM, false,
+                                                                         app2FilStreamSubscription);
         InputStreamDataHolder cmpTgrIntStreamInput = new InputStreamDataHolder("companyTriggerInternalStream",
-                companyTriggerInternalStream,
-                EventHolder.STREAM, false,
-                app2cmpTgrIntStreamSubscription);
+                                                                               companyTriggerInternalStream,
+                                                                               EventHolder.STREAM, false,
+                                                                               app2cmpTgrIntStreamSubscription);
         Map<String, InputStreamDataHolder> app2Input = new HashMap<>();
         app2Input.put("filteredStockStream", filStreamInput);
         app2Input.put("companyTriggerInternalStream", cmpTgrIntStreamInput);
@@ -261,8 +261,8 @@ public class SiddhiAppCreatorTestCase {
         PublishingStrategyDataHolder trgAvgStreamPub1 = new PublishingStrategyDataHolder("003", TransportStrategy
                 .ROUND_ROBIN, 1);
         OutputStreamDataHolder trgPubStreamOutput = new OutputStreamDataHolder("triggeredAvgStream", triggeredAvgStream,
-                EventHolder.STREAM,
-                false);
+                                                                               EventHolder.STREAM,
+                                                                               false);
         trgPubStreamOutput.addPublishingStrategy(trgAvgStreamPub1);
         Map<String, OutputStreamDataHolder> app2Output = new HashMap<>();
         app2Output.put("triggeredAvgStream", trgPubStreamOutput);
@@ -307,16 +307,16 @@ public class SiddhiAppCreatorTestCase {
         String companyTriggerInternalStream = "${companyTriggerInternalStream}\n"
                 + "Define stream companyTriggerInternalStream (symbol string)";
         SubscriptionStrategyDataHolder app1StockStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ROUND_ROBIN);
+                                                                                                        TransportStrategy.ROUND_ROBIN);
         SubscriptionStrategyDataHolder app1cmpTgrStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ROUND_ROBIN);
+                                                                                                         TransportStrategy.ROUND_ROBIN);
         InputStreamDataHolder stockStreamInput = new InputStreamDataHolder("stockStream", stockStream,
-                EventHolder.STREAM,
-                true, app1StockStreamSubscription);
+                                                                           EventHolder.STREAM,
+                                                                           true, app1StockStreamSubscription);
         InputStreamDataHolder cmpTgrStreamInput = new InputStreamDataHolder("companyTriggerStream",
-                companyTriggerStream,
-                EventHolder.STREAM,
-                true, app1cmpTgrStreamSubscription);
+                                                                            companyTriggerStream,
+                                                                            EventHolder.STREAM,
+                                                                            true, app1cmpTgrStreamSubscription);
         Map<String, InputStreamDataHolder> app1Input = new HashMap<>();
         app1Input.put("stockStream", stockStreamInput);
         app1Input.put("companyTriggerStream", cmpTgrStreamInput);
@@ -329,15 +329,15 @@ public class SiddhiAppCreatorTestCase {
                 .ROUND_ROBIN, 1);
 
         OutputStreamDataHolder filStreamOutput = new OutputStreamDataHolder("filteredStockStream", filteredStockStream,
-                EventHolder.STREAM, false);
+                                                                            EventHolder.STREAM, false);
         filStreamOutput.addPublishingStrategy(filStreamPub1);
         filStreamOutput.addPublishingStrategy(filStreamPub2);
         filStreamOutput.addPublishingStrategy(filStreamPub3);
         PublishingStrategyDataHolder cmpTgrIntStreamPub1 = new PublishingStrategyDataHolder("002", TransportStrategy
                 .ROUND_ROBIN, 1);
         OutputStreamDataHolder cmpTgrIntStreamOutput = new OutputStreamDataHolder("companyTriggerInternalStream",
-                companyTriggerInternalStream,
-                EventHolder.STREAM, false);
+                                                                                  companyTriggerInternalStream,
+                                                                                  EventHolder.STREAM, false);
         cmpTgrIntStreamOutput.addPublishingStrategy(cmpTgrIntStreamPub1);
         Map<String, OutputStreamDataHolder> app1Output = new HashMap<>();
         app1Output.put("filteredStockStream", filStreamOutput);
@@ -362,17 +362,17 @@ public class SiddhiAppCreatorTestCase {
         String triggeredAvgStream = "${triggeredAvgStream}\n"
                 + "define stream triggeredAvgStream (symbol string, avgPrice double, quantity int)";
         SubscriptionStrategyDataHolder app2FilStreamSubscription = new SubscriptionStrategyDataHolder(2,
-                TransportStrategy.FIELD_GROUPING);
+                                                                                                      TransportStrategy.FIELD_GROUPING);
         app2FilStreamSubscription.setPartitionKey("symbol");
         SubscriptionStrategyDataHolder app2cmpTgrIntStreamSubscription = new SubscriptionStrategyDataHolder(1,
-                TransportStrategy.ROUND_ROBIN);
+                                                                                                            TransportStrategy.ROUND_ROBIN);
         InputStreamDataHolder filStreamInput = new InputStreamDataHolder("filteredStockStream", filteredStockStream,
-                EventHolder.STREAM, false,
-                app2FilStreamSubscription);
+                                                                         EventHolder.STREAM, false,
+                                                                         app2FilStreamSubscription);
         InputStreamDataHolder cmpTgrIntStreamInput = new InputStreamDataHolder("companyTriggerInternalStream",
-                companyTriggerInternalStream,
-                EventHolder.STREAM, false,
-                app2cmpTgrIntStreamSubscription);
+                                                                               companyTriggerInternalStream,
+                                                                               EventHolder.STREAM, false,
+                                                                               app2cmpTgrIntStreamSubscription);
         Map<String, InputStreamDataHolder> app2Input = new HashMap<>();
         app2Input.put("filteredStockStream", filStreamInput);
         app2Input.put("companyTriggerInternalStream", cmpTgrIntStreamInput);
@@ -380,8 +380,8 @@ public class SiddhiAppCreatorTestCase {
         PublishingStrategyDataHolder trgAvgStreamPub1 = new PublishingStrategyDataHolder("003", TransportStrategy
                 .ROUND_ROBIN, 1);
         OutputStreamDataHolder trgPubStreamOutput = new OutputStreamDataHolder("triggeredAvgStream", triggeredAvgStream,
-                EventHolder.STREAM,
-                false);
+                                                                               EventHolder.STREAM,
+                                                                               false);
         trgPubStreamOutput.addPublishingStrategy(trgAvgStreamPub1);
         Map<String, OutputStreamDataHolder> app2Output = new HashMap<>();
         app2Output.put("triggeredAvgStream", trgPubStreamOutput);

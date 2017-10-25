@@ -154,7 +154,7 @@ public class ServiceComponent {
                             ServiceDataHolder.getResourceManagers().addAll(deploymentConfig.getResourceManagers());
                         } else {
                             throw new ResourceNodeException("Couldn't read " + ResourceConstants.DEPLOYMENT_CONFIG_NS +
-                                    " from deployment.yaml");
+                                                                    " from deployment.yaml");
                         }
                     } else {
                         ServiceDataHolder.setDeploymentMode(DeploymentMode.OTHER);
