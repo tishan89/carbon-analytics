@@ -149,7 +149,12 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
 
     //prior to assigning publishing strategies checking if a user given source stream is used in multiple execGroups
         checkUserGivenSourceDistribution();
+        updateOfferedParallelism();
         return new SiddhiTopology(siddhiTopologyDataHolder.getSiddhiAppName(), assignPublishingStrategyOutputStream());
+    }
+
+    private void updateOfferedParallelism() {
+
     }
 
     private String getAppName() {
@@ -474,56 +479,51 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                 new ArrayList<>(siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values());
 
         for (SiddhiQueryGroup siddhiQueryGroup1 : siddhiQueryGroupsList) {
-            for (String streamId : siddhiQueryGroup1.getOutputStream().keySet()) {
-
-                if (siddhiQueryGroup1.getOutputStream().get(streamId).getEventHolderType()
-                        .equals(EventHolder.STREAM)) {
+            for (Map.Entry<String, OutputStreamDataHolder> entry : siddhiQueryGroup1.getOutputStreams().entrySet()) {
+                String streamId = entry.getKey();
+                OutputStreamDataHolder outputStreamDataHolder = entry.getValue();
+                if (outputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM)) {
                     for (SiddhiQueryGroup siddhiQueryGroup2 : siddhiQueryGroupsList.subList(i + 1,
                                                                                        siddhiQueryGroupsList.size())) {
                         if (siddhiQueryGroup2.getInputStreams().containsKey(streamId)) {
+                            InputStreamDataHolder inputStreamDataHolder = siddhiQueryGroup2.getInputStreams().get
+                                    (streamId);
                             //when user given sink stream used by diff execGroup as a source stream
                             //additional sink will be added
-                            if (siddhiQueryGroup1.getOutputStream().get(streamId).isUserGiven()) {
+                            if (entry.getValue().isUserGiven()) {
                                 runtimeStreamDefinition = removeMetaInfoStream(streamId,
-                                                                               siddhiQueryGroup2.getInputStreams()
-                                                                                        .get(streamId)
+                                                                               inputStreamDataHolder
                                                                                         .getStreamDefinition());
-                                outputStreamDefinition = siddhiQueryGroup1.getOutputStream().get(streamId).
+                                outputStreamDefinition = outputStreamDataHolder.
                                         getStreamDefinition().replace(runtimeStreamDefinition,"\n"
                                         + "${" + streamId
                                         + "} ")
                                         + runtimeStreamDefinition;
-                                siddhiQueryGroup1.getOutputStream().get(streamId)
-                                        .setStreamDefinition(outputStreamDefinition);
-                                siddhiQueryGroup2.getInputStreams().get(streamId).setStreamDefinition(
+                                outputStreamDataHolder.setStreamDefinition(outputStreamDefinition);
+                                inputStreamDataHolder.setStreamDefinition(
                                         "${" + streamId + "} " + runtimeStreamDefinition);
-                                siddhiQueryGroup2.getInputStreams().get(streamId).setUserGiven(false);
+                                inputStreamDataHolder.setUserGiven(false);
                             }
 
                              subscriptionStrategy =
-                                    siddhiQueryGroup2.getInputStreams().get(streamId).getSubscriptionStrategy();
+                                     inputStreamDataHolder.getSubscriptionStrategy();
                             if (subscriptionStrategy.getStrategy().equals(TransportStrategy.FIELD_GROUPING)) {
                                 fieldGrouping = true;
                                 for (PublishingStrategyDataHolder publishingStrategyDataHolder :
-                                        siddhiQueryGroup1.getOutputStream().get(streamId).getPublishingStrategyList()){
+                                        outputStreamDataHolder.getPublishingStrategyList()) {
 
                                     if (publishingStrategyDataHolder.getGroupingField() != null
                                             && publishingStrategyDataHolder.getGroupingField()
-                                            .equals(siddhiTopologyDataHolder.getPartitionKeyMap().get(streamId)
-                                                            .getFirst())) {
-
-                                        int index = siddhiQueryGroup1.getOutputStream().get(streamId)
-                                                .getPublishingStrategyList().indexOf(publishingStrategyDataHolder);
+                                            .equals(subscriptionStrategy.getPartitionKey())) {
 
                                         //if more than 1 execGroup contains same partition key with diff parallelism
-                                        siddhiQueryGroup1.getOutputStream().get(streamId)
-                                                .getPublishingStrategyList().get(index).setParallelism(
+                                        publishingStrategyDataHolder.setParallelism(
                                                 Math.max(siddhiQueryGroup1.getParallelism(),
                                                          siddhiQueryGroup2.getParallelism()));
 
-                                        siddhiQueryGroup2.getInputStreams().get(streamId)
+                                        inputStreamDataHolder
                                                 .getSubscriptionStrategy().setOfferedParallelism(
-                                                Math.max(siddhiQueryGroup1.getParallelism(),
+                                                Math.max(publishingStrategyDataHolder.getParallelism(),
                                                          siddhiQueryGroup2.getParallelism()));
 
                                         siddhiTopologyDataHolder.getPartitionKeyMap().get(streamId).removeFirst();
@@ -533,21 +533,20 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                                     }
                                 }
                                 if (fieldGrouping) {
-                                    siddhiQueryGroup1.getOutputStream().get(streamId).addPublishingStrategy(
+                                    outputStreamDataHolder.addPublishingStrategy(
                                             new PublishingStrategyDataHolder(siddhiQueryGroup2.getName(),
                                                                              TransportStrategy.FIELD_GROUPING,
                                                                              siddhiTopologyDataHolder
                                                                                      .getPartitionKeyMap().get(streamId)
                                                                                      .getFirst(),
                                                                              siddhiQueryGroup2.getParallelism()));
-                                    siddhiQueryGroup2.getInputStreams().get(streamId).getSubscriptionStrategy()
-                                            .setPartitionKey(
-                                                    siddhiTopologyDataHolder.getPartitionKeyMap().get(streamId).getFirst());
+                                    inputStreamDataHolder.getSubscriptionStrategy().setPartitionKey(
+                                            siddhiTopologyDataHolder.getPartitionKeyMap().get(streamId).getFirst());
                                     siddhiTopologyDataHolder.getPartitionKeyMap().get(streamId).removeFirst();
 
                                 }
                             } else {
-                                siddhiQueryGroup1.getOutputStream().get(streamId).addPublishingStrategy(
+                                outputStreamDataHolder.addPublishingStrategy(
                                         new PublishingStrategyDataHolder(siddhiQueryGroup2.getName(),
                                                                          subscriptionStrategy.getStrategy(),
                                                                          siddhiQueryGroup2.getParallelism()));
